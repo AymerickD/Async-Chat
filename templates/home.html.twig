@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Websocket Chat</h1>
+        <div id="ws_receiver" class="col my-3 p-2"></div>
+
+        <input type="text" id="ws_to_send">
+        <button id="ws_send">Envoyer</button>
+        <button id="ws_close">x</button>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        var wsUrl = '{{ ws_url }}'
+    </script>
+
+{% endblock %}
