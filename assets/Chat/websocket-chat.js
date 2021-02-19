@@ -8,11 +8,12 @@
     var botName = 'ChatBot';
 
     var addMessageToChannel = function (message) {
-
         var data = JSON.parse(message)
 
         if (data.user === userName) {
             _receiver.innerHTML += '<div class="message_self">' + data.message + '</div>';
+        } else if (data.user === botName ) {
+            _receiver.innerHTML += '<div class="message_bot">' + data.message + '</div>';
         } else {
             _receiver.innerHTML += '<div class="message">' + '<span class="chat-user">' + data.user + '</span>' + data.message + '</div>';
         }
@@ -38,7 +39,6 @@
     };
 
     ws.onmessage = function (event) {
-        console.log(event.data)
         addMessageToChannel(event.data);
     };
 

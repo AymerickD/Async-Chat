@@ -14,7 +14,7 @@ class ChatServerCommand extends Command {
     protected function configure()
     {
         $this
-            ->setName('socket:app:chat-server')
+            ->setName('chat-server')
             ->setDescription('Start chat server');
     }
 

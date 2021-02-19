@@ -13,6 +13,8 @@ class Chat implements MessageComponentInterface {
 
     private $users = [];
 
+    private $channels = [];
+
     private $botName = 'ChatBot';
 
     private $defaultChannel = 'general';
@@ -77,12 +79,13 @@ class Chat implements MessageComponentInterface {
 
     private function subscribeToChannel(ConnectionInterface $conn, $channel, $user)
     {
+        $this->channels[$channel][$conn->resourceId] = $this->users[$conn->resourceId];
         $this->users[$conn->resourceId]['channels'][$channel] = $channel;
         $this->sendMessageToChannel(
             $conn,
             $channel,
             $this->botName,
-            $user.' joined #'.$channel
+            $user." a rejoint le salon ".$channel
         );
     }
 
@@ -90,6 +93,7 @@ class Chat implements MessageComponentInterface {
     {
         if (array_key_exists($channel, $this->users[$conn->resourceId]['channels'])) {
             unset($this->users[$conn->resourceId]['channels']);
+            unset($this->channels[$channel][$conn->resourceId]);
         }
         foreach ($this->users as $connectionId => $userConnection) {
             if (array_key_exists($channel, $userConnection['channels'])) {
@@ -109,15 +113,28 @@ class Chat implements MessageComponentInterface {
         if (!isset($this->users[$conn->resourceId]['channels'][$channel])) {
             return false;
         }
-        foreach ($this->users as $connectionId => $userConnection) {
+
+        // Gestion par channel, boucle uniquement sur les users du channel
+        foreach ($this->channels[$channel] as $connectionId => $userConnection) {
+            $userConnection['connection']->send(json_encode([
+                'action' => 'message',
+                'channel' => $channel,
+                'user' => $user,
+                'message' => $message
+            ]));
+        }
+
+        // Version sans channel, envoie à tous les users contenu dans le chat
+        /*foreach ($this->users as $connectionId => $userConnection) {
             if (array_key_exists($channel, $userConnection['channels'])) {
                 $userConnection['connection']->send(json_encode([
                     'action' => 'message',
-                    'channel' => $user,
+                    'channel' => $channel,
+                    'user' => $user,
                     'message' => $message
                 ]));
             }
-        }
+        }*/
         return true;
     }
 }

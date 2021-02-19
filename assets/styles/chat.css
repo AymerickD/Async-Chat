@@ -18,6 +18,12 @@
     margin: 5px;
 }
 
+.message_bot {
+    align-self: flex-start;
+    color: #5d5d5d;
+    margin: 5px 5px 5px 10px;
+}
+
 .chat-user {
     font-size: 12px;
     display: block;
