@@ -2,13 +2,44 @@
 
 {% block body %}
 
-    <div class="container">
-        <h1>Websocket Chat</h1>
-        <div id="ws_receiver" class="col my-3 p-2"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 p-0">
+                <nav class="chat-nav">
+                    <ul class="chat-nav_list" id="chat_nav">
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link active" data-channel="general">Général</a>
+                        </li>
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link" data-channel="1">Salon 1</a>
+                        </li>
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link" data-channel="2">Salon 2</a>
+                        </li>
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link" data-channel="3">Salon 3</a>
+                        </li>
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link" data-channel="4">Salon 4</a>
+                        </li>
+                        <li class="chat-nav_item">
+                            <a href="#" class="chat-nav_link" data-channel="5">Salon 5</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-10">
+                <h1>Websocket Chat</h1>
+                <div id="ws_receiver" class="col my-3 p-2"></div>
 
-        <input type="text" id="ws_to_send">
-        <button id="ws_send">Envoyer</button>
-        <button id="ws_close">x</button>
+                <div class="row">
+                    <div class="col d-flex align-items-start">
+                        <textarea type="text" id="ws_to_send"></textarea>
+                        <button id="ws_send">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -92,7 +92,7 @@ class Chat implements MessageComponentInterface {
     private function unsubscribeFromChannel(ConnectionInterface $conn, $channel, $user)
     {
         if (array_key_exists($channel, $this->users[$conn->resourceId]['channels'])) {
-            unset($this->users[$conn->resourceId]['channels']);
+            unset($this->users[$conn->resourceId]['channels'][$channel]);
             unset($this->channels[$channel][$conn->resourceId]);
         }
         foreach ($this->users as $connectionId => $userConnection) {
@@ -101,7 +101,7 @@ class Chat implements MessageComponentInterface {
                     'action' => 'message',
                     'channel' => $channel,
                     'user' => $this->botName,
-                    'message' => $user.' left #'.$channel
+                    'message' => $user."a quitté le salon ".$channel
                 ]));
             }
         }
