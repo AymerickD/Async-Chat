@@ -10,6 +10,7 @@
     var botName = 'ChatBot';
     var chatNav = document.getElementById("chat_nav");
 
+
     chatNav.addEventListener("click", e => {
         var nextChannel = e.target.dataset.channel
 
@@ -24,7 +25,6 @@
             channel: nextChannel,
             user: userName
         }));
-        _receiver.innerHTML += '<div class="message">' + "Vous êtes connecté !" + '</div>';
 
         ws.send(JSON.stringify({
             action: 'unsubscribe',
@@ -38,10 +38,6 @@
     var addMessageToChannel = function (message) {
         var data = JSON.parse(message)
 
-        console.log(data.channel)
-
-        console.log(channel)
-
         if (channel === data.channel) {
             if (data.user === userName) {
                 _receiver.innerHTML += '<div class="message_self">' + data.message + '</div>';
@@ -53,7 +49,7 @@
         }
     };
 
-    var botMessageToGeneral = function (message) {
+    var botMessageToChannel = function (message) {
         return addMessageToChannel(JSON.stringify({
             action: 'message',
             channel: channel,
@@ -68,7 +64,6 @@
             channel: channel,
             user: userName
         }));
-        _receiver.innerHTML += '<div class="message">' + "Vous êtes connecté !" + '</div>';
     };
 
     ws.onmessage = function (event) {
@@ -76,17 +71,16 @@
     };
 
     ws.onclose = function () {
-        botMessageToGeneral('Vous êtes déconnecté')
+        botMessageToChannel('Vous êtes déconnecté')
     };
 
     ws.onerror = function () {
-        botMessageToGeneral('Une erreur est apparue !');
+        botMessageToChannel('Une erreur est apparue !');
     };
 
 
     var _textInput = document.getElementById('ws_to_send');
     var _textSender = document.getElementById('ws_send');
-    var enterKeyCode = 13;
 
     var sendTextInputContent = function () {
         // Get text input content

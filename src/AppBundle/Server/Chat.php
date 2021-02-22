@@ -101,7 +101,7 @@ class Chat implements MessageComponentInterface {
                     'action' => 'message',
                     'channel' => $channel,
                     'user' => $this->botName,
-                    'message' => $user."a quitté le salon ".$channel
+                    'message' => $user." a quitté le salon ".$channel
                 ]));
             }
         }
