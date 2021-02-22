@@ -3,8 +3,8 @@
 ## Installation
 
 ```bash
-git clone https://github.com/AymerickD/LemonInteractiveProject.git
-cd LemonInteractiveProject
+git clone https://github.com/AymerickD/Async-Chat.git
+cd Async-Chat
 composer install
 yarn install
 yarn encore dev
